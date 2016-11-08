@@ -131,7 +131,7 @@ class suiteCRMTheme extends suiteCRMDir
 
 	function copy_file_to_target( $filename )
 	{
-		if($this->isTextFile( $filename ) )
+		if($this->FileContainsText( $filename ) )
 		{  $this->copy_text_file_to_target($filename);
 		}
 		else
@@ -310,24 +310,31 @@ class suiteCRMTheme extends suiteCRMDir
 		return $new_preg_pattern;
 	}
 
-	function fileMIMEType( $filename )
+	function FileContainsText( $filename )
 	{
-		// return mime type ala mimetype extension
-		$finfo = finfo_open(FILEINFO_MIME);
+		$return = false;
 
-		//check to see if the mime-type starts with 'text'
-		return finfo_file($finfo, $filename);
+		$mime = mime_content_type( $filename );
+		$this->_e( 'MIME = ' . $mime ."\n" );
+
+		if( $mime == 'text/plain')
+		{  $return = true;
+		}
+		elseif( $mime == 'text/html')
+		{  $return = true;
+		}
+		elseif( $mime == 'text/x-php')
+		{  $return = true;
+		}
+		elseif( $mime == 'application/xml')
+		{  $return = true;
+		}
+		elseif( $mime == 'image/svg+xml')
+		{  $return = true;
+		}
+
+		return $return;
 	}
-
-	function isTextFile( $filename )
-	{
-		// return mime type ala mimetype extension
-		$finfo = finfo_open(FILEINFO_MIME);
-
-		//check to see if the mime-type starts with 'text'
-		return substr(finfo_file($finfo, $filename), 0, 4) == 'text';
-	}
-
 
 	function deleteDirAndContents($path)
 	{
