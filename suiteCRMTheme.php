@@ -286,7 +286,7 @@ class suiteCRMTheme extends suiteCRMDir
 			$this->_e( 'content mod - color swap.  replacing "'.$old_color.'" with "'.$new_color.'"' );
 
 			// replace old primary_colores with new primary_colores in dir names
-			$pattern          = '/' . $old_color . '/';
+			$pattern          = '/' . $old_color . '/i';
 			$replacement      = $new_color;
 			$new_file_content = preg_replace($pattern, $replacement, $content);
 			$content          = $new_file_content;
